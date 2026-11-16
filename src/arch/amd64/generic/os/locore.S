@@ -6,7 +6,16 @@
 
     .text
     .globl _start
+    .extern __bss_start
+    .extern __bss_end
 _start:
+    lea __bss_start(%rip), %rdi
+    lea __bss_end(%rip), %rcx
+    sub %rdi, %rcx
+    xor %al, %al
+    cld
+    rep stosb
+
     /* Terminate callstack and setup stack */
     xor %rbp, %rbp
     lea stack_top(%rip), %rsp
