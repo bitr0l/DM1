@@ -59,6 +59,9 @@ make_dir() {
 #
 build() {
     mkdir -p out/
+
+    make_dir    \
+        src/
 }
 
 build_prep
