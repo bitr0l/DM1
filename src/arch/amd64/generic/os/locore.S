@@ -8,6 +8,7 @@
     .globl _start
     .extern __bss_start
     .extern __bss_end
+    .extern main
 _start:
     lea __bss_start(%rip), %rdi
     lea __bss_end(%rip), %rcx
@@ -20,9 +21,10 @@ _start:
     xor %rbp, %rbp
     lea stack_top(%rip), %rsp
 
-    /* Load our own GDT */
+    /* Load our own GDT and enter kernel */
     lea g_gdtr(%rip), %rdi
     call gdt_load
+    call kmain
 
     mfence
 1:  cli
